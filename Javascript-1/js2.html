@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Problem 2</title>
+    </head>
+    <body>
+        <script>
+        var fahrenheitInput = prompt("Enter a temperature in Fahrenheit:");
+        fahrenheitInput = parseFloat(fahrenheitInput);
+        var celsiusOutput = (fahrenheitInput - 32) * 5 / 9;
+        alert(fahrenheitInput + " degrees Fahrenheit is " + celsiusOutput + " degrees Celsius");
+
+        var celsiusInput = prompt("Enter a temperature in Celsius:");
+        celsiusInput = parseFloat(celsiusInput);
+        var fahrenheitOutput = (celsiusInput * 9 / 5) + 32;
+        alert(celsiusInput + " degrees Celsius is " + fahrenheitOutput + " degrees Fahrenheit");
+        </script>
+    </body>
+</html>
