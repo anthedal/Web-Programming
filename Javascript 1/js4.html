@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Problem 4</title>
+    </head>
+    <body>
+        <script>
+            var firstNumber = prompt("Enter the first number in range:");
+            var lastNumber = prompt("Enter the last number in range:");
+            firstNumber = parseInt(firstNumber);
+            lastNumber = parseInt(lastNumber);
+            var sum = 0;
+            document.write("Odd numbers in the range of " + firstNumber + " to " + lastNumber + ":<br>");
+            for (var i = firstNumber; i <= lastNumber; i++) {
+                if (i % 2 !== 0) {
+                    document.write(i + "<br>");
+                }
+                sum += i;
+            }
+            document.write("<br>Total sum: " + sum)
+        </script>
+    </body>
+</html>
