@@ -1,0 +1,78 @@
+.website-header {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background-color: white;
+    z-index: 1000;
+    padding: 10px 0;
+    border-bottom: 1px solid black;
+}
+
+body {font-family: 'Times New Roman', serif; padding:20px; padding-top:130px}
+h1 {font-size: 40px; color: #6a1e14; padding: 0 0 0 100px}
+.navigation {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    font-size: 18px;
+    padding-right: 20px;
+}
+.navigation li {
+    display: inline;
+    margin-left: 20px;
+}
+.navigation li::after {
+    content: "|";
+    margin-left: 20px;
+}
+.navigation li:last-child::after {
+    content: "";
+}
+.navigation a:hover {
+    color:blue;
+}
+@media (max-width:600px) {
+    .navigation li {
+        display: block;
+        margin: 10px 0;
+        text-align: center;
+    }
+    .navigation li::after {
+        content: "";
+    }
+}
+h2 {text-align: center; font-size: 32px; color: #6a1e14;}
+p {text-align: center; font-size: 18px;}
+
+hr {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    height: 1px;
+    background-color: black;
+}
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 50px;
+}
+.footer-left {
+    text-align: left;
+    padding-left: 100px;
+}
+.footer-right {
+    text-align: right;
+    padding-right: 100px;
+}
+@media (max-width: 600px) {
+    footer {
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer-left, .footer-right {
+        text-align: center;
+        padding: 10px 0;
+    }
+}
