@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Problem 2
+        </title>
+    </head>
+    <body>
+        <div id="answer"></div>
+        <script>
+            let sentence = prompt("Enter sentence here:");
+            if (sentence != null) {
+                var words = sentence.split(" ");
+                var wordCount = words.length;
+                document.getElementById("answer").innerHTML =
+                "There are " + wordCount + " words in the sentence.";
+            }
+            else {
+                document.getElementById("answer").innerHTML =
+                "No sentence entered.";
+            }
+        </script>
+    </body>
+</html>

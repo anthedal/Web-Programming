@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Problem 5
+        </title>
+    </head>
+    <body>
+        <div id="answer"></div>
+        <form>
+            <label for="name">Enter name:</label>
+            <input type="text" id="name" name="name">
+            <br>
+            <input type="button" id="Hello" name="Hello" value="Hello">
+            <input type="button" id="Good bye" name="Good bye" value="Good bye">
+            <input type="button" id="Greetings" name="Greetings" value="Greetings">
+        </form> 
+        <script>
+            window.onload = function() {
+                let buttons = document.querySelectorAll("input[type=button]");
+                buttons.forEach(button => button.onclick = speak);
+            };
+            function speak() {
+                let prefix = this.value;
+                let name = document.getElementById("name").value;
+                let popup = prefix + " " + name;
+                alert(popup);
+                document.getElementById("answer").innerHTML = popup;
+            }
+        </script>        
+    </body>
+</html>

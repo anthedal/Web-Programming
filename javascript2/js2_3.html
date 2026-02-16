@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Problem 3
+        </title>
+    </head>
+    <body>
+        <div id="answer"></div>
+        <script>
+            let str = "Pat, Chris, Taylor, Sam, Michael, Alex";
+            let names = str.split(", ");
+            let numberNames = "<ol>" + names.map((name, index) => "<li>" + name + "</li>").join("") + "</ol>";
+            document.getElementById("answer").innerHTML = numberNames;
+        </script>
+    </body>
+</html>

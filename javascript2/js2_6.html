@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">    
+    <head>
+        <title>
+            Problem 6
+        </title>
+    </head>
+    <body>
+        <select id="stateList" name="stateList" size="14"></select>
+        <input type="button" id="addState" name="addState" value="Add State">
+        <div id="addedStates"></div>
+        <input type="button" id="clearList" name="clearList" value="Clear List">
+        
+
+        <script>
+            var states = [
+            "Massachusetts", 
+            "New Hampshire", 
+            "Rhode Island", 
+            "Connecticut", 
+            "New York", 
+            "New Jersey", 
+            "Texas", 
+            "South Carolina", 
+            "Florida", 
+            "Ohio",
+            "California",
+            "Nevada",
+            "Oregon",
+            "Washington",
+            ];
+            var select = document.getElementById("stateList");
+
+            for (var i = 0; i < states.length; i++) {
+                var option = document.createElement("option");
+                option.text = states[i];
+                option.textContent = states[i];
+                if (i == 0) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            }
+            var addButton = document.getElementById("addState");
+            addButton.onclick = function() {
+                var addState = select.value;
+                var div = document.getElementById("addedStates");
+                div.innerHTML += addState + "<br>";
+            };
+            var clearButton = document.getElementById("clearList");
+            clearButton.onclick = function() {
+                var div = document.getElementById("addedStates");
+                div.innerHTML = "";
+            };
+
+        </script>
+    </body>
+</html>

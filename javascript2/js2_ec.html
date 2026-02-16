@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">    
+    <head>
+        <title>
+            Problem Extra Credit
+        </title>
+    </head>
+    <body>
+        <select id="stateList" name="stateList" size="14"></select>
+        <input type="button" id="addState" name="addState" value="Add State">
+        <div id="addedStates"></div>
+        <input type="button" id="clearList" name="clearList" value="Clear List">
+        
+
+        <script>
+            var states = [
+            "Massachusetts",
+            "New Hampshire",
+            "Rhode Island",
+            "Connecticut",
+            "New York",
+            "New Jersey",
+            "Texas",
+            "South Carolina",
+            "Florida",
+            "Ohio",
+            "California",
+            "Nevada",
+            "Oregon",
+            "Washington",
+            ];
+
+            var select = document.getElementById("stateList");
+            var div = document.getElementById("addedStates");
+
+            for (var i = 0; i < states.length; i++) {
+                var option = document.createElement("option");
+                option.value = states[i];
+                option.textContent = states[i];
+                if (i == 0) {option.selected = true;}
+                select.appendChild(option);
+            }
+            var addButton = document.getElementById("addState");
+            var addedStates = [];
+            addButton.onclick = function() {
+                var selectedOptions = select.options[select.selectedIndex];
+                var addState = selectedOptions.value;
+                addedStates.push(addState);
+
+                div.innerHTML = "<ol>" + addedStates.map(state => "<li>" + state + "</li>").join("") + "</ol>";
+                select.remove(select.selectedIndex);
+            };
+
+
+            var clearButton = document.getElementById("clearList");
+            clearButton.onclick = function() {
+                addedStates = [];
+                div.innerHTML = "";
+                select.innerHTML = "";
+                for (var i = 0; i < states.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = states[i];
+                    option.textContent = states[i];
+                    select.appendChild(option);
+                }
+            };
+
+        </script>
+    </body>
+</html>

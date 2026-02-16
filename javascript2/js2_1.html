@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        Problem 1
+    </title>
+</head>
+<body>
+    <div id="answer"></div>
+    <script>
+        function count(a,b) {
+            let numberCount = 0;
+            for (let i = 0; i < a.length; i++) {
+                if (a[i] < b) {
+                    numberCount++;
+                }
+            }
+            return numberCount;
+        }
+        function testCount() {
+            let array = [3,4,33,7,9,21];
+            let value = 10;
+            let answer = count(array, value);
+            document.getElementById("answer").innerHTML = 
+            "There are " + answer + " values less than " + value + ".";
+        }
+        testCount();
+    </script>
+</body>
+</html>
