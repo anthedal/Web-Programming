@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Part 2</title>
+            <!-- Loading jQuery library for $.get function -->
+        <script src="https://code.jquery.com/jquery-4.0.0.js"   integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="   crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <!-- Div to format the list of songs in the JSON file -->
+        <div id="songFormat"></div>
+        <script>
+            $.get("songs.json", function(data) {
+                // Store songs.json data in a variable. 
+                let songList = data;
+                // Initialize the string for song list
+                let format = "";
+
+                // Using for loop to format each of the songs array. 
+                for (let i = 0; i < songList.songs.length; i++) {
+                        // Title of song is in bold at the top. 
+                        format += "<strong>" + songList.songs[i].title + "</strong><br>";
+                        format += "Artist: " + songList.songs[i].artist + "<br>";
+                        format += "Genre: " + songList.songs[i].genre.join(", ") + "<br>"; // the genres are joined with a comma when there is more than one listed. 
+                        format += "Released: " + songList.songs[i].year + "<br><br>";
+                        // Artist, genre, and release year are added after the title with line breaks in between. 
+                    }
+                    
+                    // Displaying the list in the div with use of innerHTML property. 
+                    document.getElementById("songFormat").innerHTML = format;
+                });
+        </script>
+    </body>
+</html>

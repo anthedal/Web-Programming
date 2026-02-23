@@ -1,0 +1,52 @@
+{
+"songs":[
+    {
+    "title": "Choosing Texas",
+    "artist": "Ella Langley",
+    "year": 2025,
+    "genre": ["Country-rock", "Country"]
+},
+{
+    "title": "Dont Stop Believin'",
+    "artist": "Journey",
+    "year": 1981,
+    "genre": ["Rock", "Soft rock"]
+},
+{
+    "title": "The Great Divide",
+    "artist": "Noah Kahan",
+    "year": 2025,
+    "genre": ["Folk-pop", "Indie-folk"]
+},
+{
+    "title": "Lose Control",
+    "artist": "Teddy Swims",
+    "year": 2023,
+    "genre": ["R&B", "Soul", "Country"]
+},
+{
+    "title": " Man I Need",
+    "artist": "Olivia Dean",
+    "year": 2025,
+    "genre": ["R&B", "Soul", "Pop"]
+},
+{
+    "title": "Dancing Queen",
+    "artist": "ABBA",
+    "year": 1976,
+    "genre": ["Pop", "Disco"]
+},
+{
+    "title": "This Version Of Us",
+    "artist": "Ella Langley",
+    "year": 2025,
+    "genre": ["Country"]
+},
+{
+    "title": "I Wanna Dance With Somebody",
+    "artist": "Whitney Houston",
+    "year": 1987,
+    "genre": ["R&B", "Dance-pop"]
+}
+]
+}

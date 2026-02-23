@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Part 3</title>
+        <!-- Loading jQuery library for $.get function -->
+        <script src="https://code.jquery.com/jquery-4.0.0.js"   integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="   crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <!-- Form to select genre that user wants and filter songs -->
+        <form id = "songForm">
+            <label for="genreSelect">Select Genre:</label>
+            <select id="genreSelect">
+                <!-- Left empty so genres not hard coded and can be added if needed. Will pull genres from the JSON file. -->
+            </select>
+            <button type="button" id="filterBtn">Filter</button>
+            <!-- Button to filter songs based on genre selected. -->
+        </form>
+
+        <!-- Div to display songs that are filtered based on genre selected. -->
+        <div id = "filteredSongs"></div>
+        <script>
+            $.get("songs.json", function(data) {
+                // Store songs.json data in a variable.
+                songList = data;
+                // Use a set here to store the genres without keeping the duplicates that are in the file. 
+                let genreSet = new Set(); 
+
+                // For loop to go through each of the songs to add genres to the set.  
+                for (let i = 0; i < songList.songs.length; i++) {
+                    songList.songs[i].genre.forEach(genre => genreSet.add(genre));
+                }
+        
+                // Add the genres to the dropdown select element in the form. 
+                let genreSelect = document.getElementById("genreSelect");
+                genreSet.forEach(genre => {
+                    option = document.createElement("option");
+                    option.value = genre;
+                    option.text = genre;
+                    genreSelect.appendChild(option);
+                });
+            });
+
+            // Use onclick for the filter button to filter the songs based on the genre selected, 
+            document.getElementById("filterBtn").onclick = function() {
+                let selectedGenre = document.getElementById("genreSelect").value;
+                let list = document.getElementById("filteredSongs");
+                let output = "";
+                // For loop to loop through the songs and inlcude the song titles that have the genre selected. 
+                for (let i = 0; i < songList.songs.length; i++) {
+                    if (songList.songs[i].genre.includes(selectedGenre)) {
+                        output += songList.songs[i].title + "<br>";
+                    }
+                }
+                // Display the song titles of genre selected in div with the use of innerHTML property.
+                document.getElementById("filteredSongs").innerHTML = output;
+            };
+        </script>
+    </body>
+</html>

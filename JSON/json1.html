@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Part 1</title>
+    </head>
+    <body>
+        <script>
+            let songList = {
+                "songs": [
+                    {
+                        "title": "Choosing Texas",
+                        "artist": "Ella Langley",
+                        "year": 2025,
+                        "genre": ["Country-rock", "Country"]
+                    },
+                    {
+                        "title": "Dont Stop Believin'",
+                        "artist": "Journey",
+                        "year": 1981,
+                        "genre": ["Rock", "Soft rock"]
+                    },
+                    {
+                        "title": "The Great Divide",
+                        "artist": "Noah Kahan",
+                        "year": 2025,
+                        "genre": ["Folk-pop", "Indie-folk"]
+                    },
+                    {
+                        "title": "Lose Control",
+                        "artist": "Teddy Swims",
+                        "year": 2023,
+                        "genre": ["R&B", "Soul", "Country"]
+                    },
+                    {
+                        "title": "Man I Need",
+                        "artist": "Olivia Dean",
+                        "year": 2025,
+                        "genre": ["R&B", "Soul", "Pop"]
+                    },
+                    {
+                        "title": "Dancing Queen",
+                        "artist": "ABBA",
+                        "year": 1976,
+                        "genre": ["Pop", "Disco"]
+                    },
+                    {
+                        "title": "This Version Of Us",
+                        "artist": "Ella Langley",
+                        "year": 2025,
+                        "genre": ["Country"]
+                    },
+                    {
+                        "title": "I Wanna Dance With Somebody",
+                        "artist": "Whitney Houston",
+                        "year": 1987,
+                        "genre": ["R&B", "Dance-pop"]
+                    }
+                ]
+            };
+        // The songs are listed above in a JSON object. The variable is songList and the data is separated by the song data. 
+        songString = JSON.stringify(songList, null, 2); 
+        // Added null, to help with formatting the html document. The null ensures that none of the data is removed.
+        //  The 2 adds indents as the JSON is shown above. 
+        document.write("<pre>" + songString + "</pre>"); 
+        // The <pre></pre> tags keep the data formatted as written above to make it more readable. 
+        </script>
+    </body>
+</html>
