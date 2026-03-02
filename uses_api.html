@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Uses API</title>
+    </head>
+    <body>
+        <!--Create a button section for three different breeds that are on the Dog API website -->
+        <button onclick="dogData('husky')">Show Huskies</button>
+        <button onclick="dogData('rottweiler')">Show Rottweillers</button>
+        <button onclick="dogData('beagle')">Show Beagles</button>
+        <br><br>
+        <!--Provide the image attachments from the website. Hardcoded three images to show up when the breed is clicked on --> 
+        <img id="image1" width="200">
+        <img id="image2" width="200">
+        <img id="image3" width="200">
+
+
+        <script>
+            //Create a function to fetch the data from the API url. 
+            function dogData(breed) {
+                let url = "https://dog.ceo/api/breed/" + breed + "/images/random/3"
+                fetch(url)
+                    .then(res => res.text())
+                    .then (data =>
+                        {
+                            //The response will provide the 'message' from the url which is the three different images. 
+                            // Convert to object 
+                            resp = JSON.parse(data);
+                            //Shows each image 
+                            document.getElementById("image1").src = resp.message[0];
+                            document.getElementById("image2").src = resp.message[1];
+                            document.getElementById("image3").src = resp.message[2];
+                        }
+                    )
+                    .catch (error => console.log(error))
+
+            }
+        </script>
+    </body>
+</html>
