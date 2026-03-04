@@ -1,0 +1,69 @@
+body {
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+.cells {
+    display: inline-block;
+    width: 60px;
+    height: 50px;
+    margin: 2px;
+    border: 2px solid black;
+    text-align: center;
+    line-height: 50px;
+    font-size: 25px;
+    border-radius: 10px;
+}
+#guess {
+    text-transform: uppercase;
+}
+#keyboard {
+    margin-top: 25px;
+}
+#keyboard button{
+    margin: 3px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 6px;
+    height: 40px;
+    width: 55px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.keyboard-row {
+    display: flex;
+    margin-bottom: 5px;
+    justify-content: center;
+}
+.correct{
+    background-color: green;
+    color: black;
+}
+.wrongplace {
+    background-color: gold;
+    color: black;
+}
+.notinword {
+    background-color: grey;
+    color: black;
+}
+.hidden {
+    display: none;
+}
+.disabledButton {
+    pointer-events: none;
+    opacity: 0.5;
+}
+@media (max-width: 600px) {
+    .cells {
+        width: 45px;
+        height: 40px;
+        font-size: 18px;
+    }
+    #keyboard button {
+        width: 40px;
+        height: 35px;
+        font-size: 12px;
+    }
+}

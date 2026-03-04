@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Wordle</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h2>Wordle</h2>
+        <script>
+            <!--Function will begin creating the Wordle board-->
+            function createBoard() {
+                //Create for loop for the rows of the board
+                for (let row = 0; row < 6; row++) {
+                    //Creates for loop for the columns of the board
+                    for (let column = 0; column < 5; column++) {
+                        document.write("<div class='cells row" + row + " column" + column + "'></div>");
+                    }
+                    document.write("<br>");
+                }
+            }
+            createBoard();
+
+            
+        </script>
+        <!--Creates the box for the text for the guess along with the submit button to check the guess -->
+        <form>
+            <!-- Input the guess text into the box -->
+            <input type="text" id="guess" name="guess">
+            <!-- Input button for the user to check their guess -->
+            <input type="button" id="checkmyguess" value="Check My Guess" onclick="checkGuess()">
+            <!-- Input button to restart the game, but remains hidden until the user wins the game or reaches the end. -->
+            <input type="button" id="restartButton" class="hidden" value="Restart Game" onclick="restartGame()">
+        </form>
+
+        <div id="keyboard"></div>
+        
+        <script>
+            // Create the answer array dictionary of 70 words. 
+            let answerDictionary = [
+                "ABOUT", "ALERT", "BEACH", "BELOW", "BAKER", "APART", "BASIC", "COVER", "ALARM", "CRASH",
+                "CLASS", "CLEAN", "CHAIR", "CHASE", "DANCE", "GROUP", "EQUAL", "GUARD", "FOUND", "GUESS",
+                "FRAUD", "HEAVY", "DRESS", "HEART", "FIFTY", "GRACE", "IDEAL", "INDEX", "ISSUE", "MEDIA",
+                "LUNCH", "MONEY", "OFFER", "OCEAN", "LEARN", "MORAL", "MAGIC", "MUSIC", "OUGHT", "NEVER",
+                "ROUTE", "RURAL", "PRICE", "RAPID", "SCENE", "PROUD", "QUEEN", "SERVE", "SUGAR", "TOTAL",
+                "SPORT", "TOUGH", "STAGE", "THEFT", "THEME", "TRUST", "TIGER", "UNTIL", "WRONG", "WROTE",
+                "TRAIN", "VITAL", "WORTH", "VOICE", "VISIT", "VIRUS", "UPSET", "THROW", "SOUTH", "UNION"
+            ];
+            // Function to move to the next word for the game. 
+            // This is done with a random selection of a word from the array. 
+            function nextWord () {
+                return answerDictionary[Math.floor(Math.random() * answerDictionary.length)];
+            }
+            // Javascript class 
+            function WordleGame() {
+                // For the next word 
+                this.answer = nextWord();
+                // Initialize the current word 
+                this.currentRow = 0;
+            }
+            //Creates the game based off the wordle game function 
+            const game = new WordleGame();
+
+            // Function that calls the API to vaildate the guess word. 
+            function checkWord() {
+                // Converts the guess to lowercase to add to the url.
+                const word = document.getElementById('guess').value.toLowerCase();
+                // Url for an api dictionary for the guess to be searched. 
+                const url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word
+                    // Fetch function to call the api.  
+                    res = fetch(url)
+                        .then(res => {
+                            // If statement to check if the word is valid by searching the word at the end of the url. 
+                            // For if it not ok then will throw error if not valid. This will move to the error catch. 
+                            if (!res.ok) {
+                                throw new Error("Not a valid word. Try again");
+                            }
+                            // If the word is valid then returns the word and can proceed. 
+                            return res.json();
+                        })
+                        .then(data => {
+                            //shows the word is valid in the console for the guess that the user puts in. 
+                            console.log("valid word:", data[0].word);
+                            //returns the word to all capitals in order to be tested against the answer. 
+                            return data[0].word.toUpperCase();
+                        });
+                    return res;
+            }
+
+            // Function will check the guess that will be submitted
+            function checkGuess() {
+                const guessInput = document.getElementById("guess")
+                const guess = guessInput.value.toUpperCase(); // Converts the guess input to upper case letters
+                alert("Your guess is: " + guess); // pop up alert to show the guess that the user inputed. 
+
+                // Alert for the user that the word they entered to try again on the same line they initially tried. 
+                if (guess.length != 5) {
+                    alert("Error: Not 5 letters. Try again."); // pop up error alert for the user to try another word. 
+                    return; // returns back to the same row to try again. 
+                }
+
+                // calls the function above to check the word with the api. 
+                checkWord()
+                    // if the word is valid then we can proceed with checking the guess and changing the coloring where necessary. 
+                    .then(validWord => {
+
+                        // Creat a javascript object to store the letter count in the answer. 
+                        let letterCount = {};
+                         // Counts the letters and which letters in the answer for the wordle. 
+                        for (let i = 0; i < 5; i++) {
+                            let letter = game.answer[i];
+                            // Creates a if else statement to store the letters in the answer in order to test the guesses alongside it. 
+                            if (letterCount[letter]) {
+                                letterCount[letter] += 1;
+                            } else {
+                                letterCount[letter] = 1;
+                            }
+                        }
+                        // Javascript object to represent the status of the letters in the wordle guesses. 
+                        let status = {
+                            correct: "correct",
+                            wrongplace: "wrongplace",
+                            notinword: "notinword"
+                        }
+
+                        // For statement for the letters in the guess. 
+                        for (let column = 0; column < 5; column++) {
+                            // displays the guess in the wordle boxes. 
+                            let letter = guess[column];
+                            let cell = document.getElementsByClassName("row" + game.currentRow + " column" + column)[0];
+                            cell.innerHTML = letter;
+                            // First check of the letters in the guess. 
+                            if (letter == game.answer[column]) {
+                                // Class to add the color shading for the correct letter spot. 
+                                // Looks for correct letters first in the guess. 
+                                cell.classList.add(status.correct);
+                                // Removes letters from count that are in the answer once marked correct if they exist in the guess. 
+                                letterCount[letter] -= 1;
+                            }
+                        }
+                        // For statement for looking at the letters in the wrong place or not in the word. 
+                        for (let column = 0; column < 5; column++) {
+                            let letter = guess[column];
+                            let cell = document.getElementsByClassName("row" + game.currentRow + " column" + column)[0];
+                            // If statement for if the cell is not classified correct then it is added to the wrong place shading. 
+                            if (!cell.classList.contains(status.correct)) {
+                                if (letterCount[letter] > 0) {
+                                    cell.classList.add(status.wrongplace);
+                                    //Removes letters from count once assessed so it is dont counted again. 
+                                    letterCount[letter] -= 1;
+                                // Else for the shading of the letter if it is not in the answer. 
+                                } else {
+                                    cell.classList.add(status.notinword);
+                                }
+                            }
+                            // Shading for the keyboard buttons that follow the same shading as the boxes. 
+                            // Created using a key for the letters. 
+                            const keyButton = document.getElementById("key-" + letter);
+                            if (keyButton) {
+                                // The following if else statements will go through the correct, wrong palce and not in word characteristics. 
+                                // Statements go as follows to ensure that the correct shading are completed first and will not change when moving to the next two options. 
+                                if (cell.classList.contains(status.correct)) {
+                                    keyButton.classList.add(status.correct);
+                                // Checking the class priority for shading the key buttons to ensure the priorty of the status are not overshadowed  
+                                // Correct status is first, then wrong place, then not in word. 
+                                } else if (cell.classList.contains(status.wrongplace) &&
+                                        !keyButton.classList.contains(status.correct)) {
+                                    keyButton.classList.add(status.wrongplace);
+                                } else if (!keyButton.classList.contains(status.correct) &&
+                                        !keyButton.classList.contains(status.wrongplace)) {
+                                    keyButton.classList.add(status.notinword);
+                                }
+                            }
+                        }
+                        // If the user get the answer before reaching the end of the game.
+                        if (guess == game.answer) {
+                            alert("You Win! Answer:" + game.answer); // Alert to tell user they won and the answer. 
+                            document.getElementById("restartButton").classList.remove("hidden"); // Once alert is shown, the restart game button will be shown for the user to click on. 
+                            return;
+                        }
+                        // After each guess, the user will move down the rows to try again. 
+                        game.currentRow = game.currentRow + 1
+                        // If user reaches the last row without guessing the correct answer they will lose the game. 
+                        if (game.currentRow == 6) {
+                            alert("Game Over. Answer was: " + game.answer);
+                            document.getElementById("restartButton").classList.remove("hidden"); // Restart button will show. 
+                            let guessButton = document.getElementById("checkmyguess"); 
+                            guessButton.classList.add("disabledButton"); // Guess button will be disabled so the user cannot keep trying other guesses as they will be alerted the correct answer. 
+                            return;
+                        }
+                        guessInput.value = ""; // After each guess the input box will clear for the next guess. 
+                })
+                // Error message for if the word is not contained in the api dictionary and so deemed invalid. 
+                .catch(error => {
+                    alert(error.message);
+                    guessInput.value = "";
+                });
+            }
+            // Create keyboard function to display below the wordle board and input box. 
+            function createKeyboard() {
+                const keyboard = document.getElementById("keyboard")
+                // Display the rows of a keyboard as usual. 
+                const rows = [
+                    ["Q","W","E","R","T","Y","U","I","O","P"],
+                    ["A","S","D","F","G","H","J","K","L"],
+                    ["Enter","Z","X","C","V","B","N","M","Backspace"]
+                ];
+                // Create function so the keyboard buttons onscreen will be able to be used as such. 
+                function keyboardButtons(letter, action) {
+                    const button = document.createElement("button");
+                    button.type = "button"; // JS formulation to create the button type 
+                    button.textContent = letter; // JS formulation to write on the button the letters of the alphabet. 
+                    button.addEventListener("click", action) // Event listener to allow the button to function when the action (being clicked on by user) is necessary. 
+                    return button;
+                }
+                // Conduct for each row the following functions to work the same. . 
+                rows.forEach(keyboardRow => {
+                    const row = document.createElement("div");
+                    row.className ="keyboard-row";
+
+                    keyboardRow.forEach(letter => {
+                        //create keyboard button for enter to hold the word "Enter"
+                        // When the enter button is clicked, the checkGuess function is called in order to check the guess inputed. 
+                        if(letter === "Enter") {
+                            row.appendChild(keyboardButtons(letter, checkGuess));
+                        } 
+                        // create keyboard button for the backspace 
+                        // user can delete a letter or whole word from the keyboard if they would like. 
+                        else if(letter === "Backspace") {
+                            const backspace = document.createElement("button");
+                            backspace.type = "button";
+                            // Will use an image to show on the backspace button. 
+                            const img = document.createElement("img");
+                            img.src = "backspace.png"; // image source in the file 
+                            img.width = 20; // image width in the button
+                            img.height = 20; // image height in the button 
+                            backspace.appendChild(img);
+                            // Allows the button to perform the backspace if necessary. 
+                            backspace.onclick = () => {
+                                input = document.getElementById("guess");
+                                input.value = input.value.slice(0, -1); // removes the letter at the end of the word if clicked once. 
+                            };
+                            row.appendChild(backspace);
+                        }
+                        else {
+                            // for all other letter buttons on the keyboard. 
+                            const letterButtons = keyboardButtons(letter, () => {
+                                const input = document.getElementById("guess");
+                                // Limits the input length to maximum of 5 letters 
+                                if(input.value.length < 5) {
+                                    input.value += letter;
+                                }
+                            });
+                            // Create an id for the key in order to color the letters respectively. 
+                            letterButtons.id = "key-" + letter;
+                            row.appendChild(letterButtons);
+                        }
+                    });
+                    keyboard.appendChild(row);
+                    });
+                }
+            createKeyboard();
+            
+            // Create function to restart the game. 
+            function restartGame() {
+                game.currentRow = 0;
+
+                // Selects all the cells on the wordle board 
+                document.querySelectorAll(".cells").forEach(cell => {
+                    cell.innerHTML = "";
+                    // Removes for each cell shading if it has it. 
+                    cell.classList.remove("correct", "wrongplace", "notinword");
+                });
+                // Selects all the keybaord buttons 
+                document.querySelectorAll("#keyboard button").forEach(key => {
+                    // Removes for each button the shading if it has it. 
+                    key.classList.remove("correct", "wrongplace", "notinword");
+                });
+                // once the restart button is clicked, the guess button is active again for the next word. 
+                let guessButton = document.getElementById("checkmyguess");
+                guessButton.classList.remove("disabledButton");
+                // The restart button is now hidden until the end of game. 
+                document.getElementById("restartButton").classList.add("hidden");
+                // Input area for guess is cleared. 
+                let guessInput = document.getElementById("guess");
+                guessInput.value = "";
+                // The answer is displayed in the console for debugging. 
+                game.answer = nextWord();
+                console.log("Answer: ", game.answer);
+            }
+            restartGame();
+
+        </script>
+    </body>
+</html>
