@@ -18,6 +18,7 @@ body {
 }
 #keyboard {
     margin-top: 25px;
+    background-color: white;
 }
 #keyboard button{
     margin: 3px;
